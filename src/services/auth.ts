@@ -32,4 +32,3 @@ export const passwordEncrypt = (password: string) => {
 export const passwordValidate = (newPassword: string, hash: string) => {
     return bc.compare(newPassword, hash);
 };
-//
