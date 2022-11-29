@@ -50,6 +50,11 @@ jobs:
         run: npm ci
       - name: Testing coverage
         run: npm run test:prod #Change for a valid npm script
+        env:
+          USER: ${{ secrets.USER }}
+          PASSWD: ${{ secrets.PASSWD }}
+          CLUSTER: ${{ secrets.CLUSTER }}
+          SECRET: ${{ secrets.SECRET }}
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
