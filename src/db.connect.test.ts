@@ -1,27 +1,32 @@
 import { dbConnect } from './db.connect';
 import mongoose from 'mongoose';
-describe('Given dbConnect function', () => {
-    describe('When we connect', () => {
-        test('then it should return a typeof mongoose', async () => {
+
+const spyConnect = jest.spyOn(mongoose, 'connect');
+
+describe('Given "dbConnect"', () => {
+    afterEach(() => {
+        mongoose.disconnect();
+    });
+    describe('When the enviroment is "test"', () => {
+        test('then it sould connect with TESTING_Final_Project_2022 database', async () => {
+            process.env.NODE_ENV = 'test';
             const result = await dbConnect();
+            expect(spyConnect).toHaveBeenCalled();
             expect(typeof result).toBe(typeof mongoose);
-            mongoose.disconnect();
+            expect(result.connection.db.databaseName).toBe(
+                'TESTING_Final_Project_2022'
+            );
         });
     });
     describe("when NODE_ENV is not 'test'", () => {
-        test('then', () => {
-            process.env.NODE_ENV = 'Final_Project_2022';
-            const result = dbConnect();
-            expect(result).toBeInstanceOf(Promise);
-            mongoose.disconnect();
-        });
-    });
-    describe("when NODE_ENV is 'test'", () => {
-        test('then', () => {
-            process.env.NODE_ENV = 'TESTING_Final_Project_2022';
-            const result = dbConnect();
-            expect(result).toBeInstanceOf(Promise);
-            mongoose.disconnect();
+        test('then it sould connect with Final_Project_2022 database', async () => {
+            process.env.NODE_ENV = 'another';
+            const result = await dbConnect();
+            expect(spyConnect).toHaveBeenCalled();
+            expect(typeof result).toBe(typeof mongoose);
+            expect(result.connection.db.databaseName).toBe(
+                'Final_Project_2022'
+            );
         });
     });
 });

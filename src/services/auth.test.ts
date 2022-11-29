@@ -74,13 +74,13 @@ describe('given "passwordEncrypt" and "passwordValidate"', () => {
     const spyBcCompare = jest.spyOn(bc, 'compare');
     describe('when we call passwordEncrypted', () => {
         test('Bcryptjs.hash should be called', async () => {
-            await passwordEncrypt('12345');
+            await passwordEncrypt('794613');
             expect(spyBcHash).toHaveBeenCalled();
         });
     });
     describe('when we call "passwordValidate"', () => {
         let hash: string;
-        const password = '12345';
+        const password = '794613';
         const badPassword = '0';
         beforeEach(async () => {
             hash = await passwordEncrypt(password);

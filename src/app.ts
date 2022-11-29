@@ -8,7 +8,7 @@ export const app = express();
 app.disable('x-powered-by');
 
 const corsOptions = {
-    origin: '*',
+    origin: 'trustedwebsite.com',
 };
 
 app.use(morgan('dev'));
