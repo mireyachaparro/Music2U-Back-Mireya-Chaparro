@@ -1,9 +1,7 @@
 import { User, UserModel } from '../entities/user.entity';
 import { passwordEncrypt } from '../services/auth';
-
-export type id = number | string;
-
-export class UserRepository {
+import { UserRepoGeneric, id } from './generic.repository';
+export class UserRepository implements UserRepoGeneric {
     static instance: UserRepository;
 
     public static getInstance(): UserRepository {
@@ -49,9 +47,9 @@ export class UserRepository {
         return result;
     }
 
-    // async delete(id: id): Promise<void>{
-    //     const result = await this.#Model.findByIdAndDelete(id);
-    //     if(result === null) throw new Error("ID not found");
-    //     return result;
-    // }
+    async delete(id: id): Promise<void> {
+        const result = await this.#Model.findByIdAndDelete(id);
+        if (result === null) throw new Error('ID not found');
+        return;
+    }
 }
