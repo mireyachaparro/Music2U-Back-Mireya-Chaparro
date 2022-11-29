@@ -4,9 +4,6 @@ import mongoose from 'mongoose';
 const spyConnect = jest.spyOn(mongoose, 'connect');
 
 describe('Given "dbConnect"', () => {
-    afterEach(() => {
-        mongoose.disconnect();
-    });
     describe('When the enviroment is "test"', () => {
         test('then it sould connect with TESTING_Final_Project_2022 database', async () => {
             process.env.NODE_ENV = 'test';
@@ -28,5 +25,8 @@ describe('Given "dbConnect"', () => {
                 'Final_Project_2022'
             );
         });
+    });
+    afterEach(() => {
+        mongoose.disconnect();
     });
 });
