@@ -24,23 +24,27 @@ export type User = {
 };
 
 export const userSchema = new Schema<User>({
-    name: {
-        type: String,
-        required: true,
-    },
-    last_name: {
-        type: String,
-        required: true,
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
+    // name: {
+    //     type: String,
+    //     required: true,
+    // },
+    // last_name: {
+    //     type: String,
+    //     required: true,
+    // },
+    // email: {
+    //     type: String,
+    //     required: true,
+    //     unique: true,
+    // },
+    // password: {
+    //     type: String,
+    //     required: true,
+    // },
+    name: String,
+    last_name: String,
+    email: String,
+    password: String,
     phone: {
         type: String,
         required: false,
