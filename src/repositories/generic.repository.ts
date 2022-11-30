@@ -10,3 +10,12 @@ export interface UserRepoGeneric {
     patch: (id: id, data: Partial<User>) => Promise<User>;
     delete: (id: id) => Promise<void>;
 }
+
+export interface AlbumRepoGeneric {
+    getAll: () => Promise<Array<User>>;
+    get: (id: id) => Promise<User>;
+    post: (data: Partial<User>) => Promise<User>;
+    find: (data: Partial<User>) => Promise<User>;
+    patch: (id: id, data: Partial<User>) => Promise<User>;
+    delete: (id: id) => Promise<void>;
+}
