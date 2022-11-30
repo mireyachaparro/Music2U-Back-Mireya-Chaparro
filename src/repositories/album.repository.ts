@@ -57,9 +57,11 @@ export class AlbumRepository implements AlbumRepoGeneric {
     }
 
     async delete(id: id): Promise<void> {
-        const result = await this.#Model.findByIdAndDelete('owner', {
-            albums: 0,
-        });
+        const result = await this.#Model
+            .findByIdAndDelete(id)
+            .populate('owner', {
+                albums: 0,
+            });
         if (!result) throw new Error('ID not found');
         return;
     }
