@@ -23,7 +23,7 @@ describe('Given an instance of RobotRepository', () => {
         testIds = await setUpCollection();
     });
 
-    describe('when it call getAll and it call Model.find', () => {
+    describe('when it calls getAll and it calls Model.find', () => {
         test('then it returns all users in the collection', async () => {
             const spyMmodel = jest.spyOn(UserModel, 'find');
             const result = await repository.getAll();
@@ -32,7 +32,7 @@ describe('Given an instance of RobotRepository', () => {
         });
     });
 
-    describe('when it call get and it call Model.findById', () => {
+    describe('when it calls get and it calls Model.findById', () => {
         const spyModel = jest.spyOn(UserModel, 'findById');
 
         test('then if ID is valid, it returns this user', async () => {
@@ -57,7 +57,7 @@ describe('Given an instance of RobotRepository', () => {
     });
 
     //test de findone
-    // describe('when it call find and it call Model.findOne', () => {
+    // describe('when it calls find and it calls Model.findOne', () => {
 
     //     const spyModel = jest.spyOn(UserModel, 'find');
 
@@ -65,7 +65,7 @@ describe('Given an instance of RobotRepository', () => {
     // });
 
     //este test falla y no se por que
-    // describe('when it call post and it call Model.create', () => {
+    // describe('when it calls post and it callss Model.create', () => {
     //     const spyModel = jest.spyOn(UserModel, 'create');
     //     test('then if data is valid, it returns the new user', async () => {
     //         const newUser = {
