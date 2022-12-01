@@ -1,6 +1,6 @@
-import { User, UserModel } from '../entities/user.entity';
-import { passwordEncrypt } from '../services/auth';
-import { UserRepoGeneric, id } from './generic.repository';
+import { User, UserModel } from '../entities/user.entity.js';
+import { passwordEncrypt } from '../services/auth.js';
+import { UserRepoGeneric, id } from './generic.repository.js';
 export class UserRepository implements UserRepoGeneric {
     static instance: UserRepository;
 
