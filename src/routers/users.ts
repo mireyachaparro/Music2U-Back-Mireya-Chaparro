@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { UserController } from '../controllers/user.controller';
-import { AlbumRepository } from '../repositories/album.repository';
-import { UserRepository } from '../repositories/user.repository';
+import { UserController } from '../controllers/user.controller.js';
+import { AlbumRepository } from '../repositories/album.repository.js';
+import { UserRepository } from '../repositories/user.repository.js';
 
 export const userRouter = Router();
 

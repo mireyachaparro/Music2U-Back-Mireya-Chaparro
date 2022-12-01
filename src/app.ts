@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import { setCors } from './middlewares/cors';
-import { userRouter } from './routers/users';
+import { setCors } from './middlewares/cors.js';
+import { userRouter } from './routers/users.js';
 
 export const app = express();
 

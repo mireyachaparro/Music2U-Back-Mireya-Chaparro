@@ -1,7 +1,7 @@
 import http from 'http';
-import { app } from './app';
-import { dbConnect } from './db.connect';
-import { MyErrors } from './interfaces/error';
+import { app } from './app.js';
+import { dbConnect } from './db.connect.js';
+import { MyErrors } from './interfaces/error.js';
 
 const port = process.env.PORT || 3300;
 const server = http.createServer(app);

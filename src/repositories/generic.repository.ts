@@ -1,5 +1,5 @@
-import { Album } from '../entities/album.entity';
-import { User } from '../entities/user.entity';
+import { Album } from '../entities/album.entity.js';
+import { User } from '../entities/user.entity.js';
 
 export type id = number | string;
 

@@ -1,8 +1,8 @@
 import { NextFunction, Response, Request } from 'express';
-import { HTTPError } from '../interfaces/error';
-import { UserRepository } from '../repositories/user.repository';
-import { AlbumRepository } from '../repositories/album.repository';
-import { createToken, passwordValidate } from '../services/auth';
+import { HTTPError } from '../interfaces/error.js';
+import { UserRepository } from '../repositories/user.repository.js';
+import { AlbumRepository } from '../repositories/album.repository.js';
+import { createToken, passwordValidate } from '../services/auth.js';
 
 export class UserController {
     constructor(

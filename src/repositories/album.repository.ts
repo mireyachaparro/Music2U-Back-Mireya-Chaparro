@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
-import { Album, AlbumModel, ProtoAlbum } from '../entities/album.entity';
-import { AlbumRepoGeneric, id } from './generic.repository';
+import { Album, AlbumModel, ProtoAlbum } from '../entities/album.entity.js';
+import { AlbumRepoGeneric, id } from './generic.repository.js';
 
 export class AlbumRepository implements AlbumRepoGeneric {
     static instance: AlbumRepository;
