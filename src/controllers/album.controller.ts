@@ -27,18 +27,45 @@ export class AlbumController {
         }
     }
 
-    // async post(req: Request, res: Response, next: NextFunction){
-    //     try{
-    //         if(!req.payload){
-    //             throw new Error("Invalid payload");
-    //         }
-    //         const user = await this.userRepository.get(req.payload.id);
-    //         req.body.owner = user.id;
-    //         const album = await this.albumRepository.post(req.body);
-    //     }catch(error){
-    //         //
-    //     }
-    // }
+    async post(req: Request, res: Response, next: NextFunction) {
+        try {
+            if (!req.payload) {
+                throw new Error('Invalid payload');
+            }
+            const user = await this.userRepository.get(req.payload.id);
+            req.body.owner = user.id;
+            const album = await this.albumRepository.post(req.body);
+            user.possessions.push(album.id);
+            this.userRepository.patch(user.id.toString(), {
+                possessions: user.possessions,
+            });
+            res.status(201);
+            res.json({ album });
+        } catch (error) {
+            next(this.#controlHTTPError(error as Error));
+        }
+    }
+
+    async patch(req: Request, res: Response, next: NextFunction) {
+        try {
+            const album = await this.albumRepository.patch(
+                req.params.id,
+                req.body
+            );
+            res.json({ album });
+        } catch (error) {
+            next(this.#controlHTTPError(error as Error));
+        }
+    }
+
+    async delete(req: Request, res: Response, next: NextFunction) {
+        try {
+            await this.albumRepository.delete(req.params.id);
+            res.json({});
+        } catch (error) {
+            next(this.#controlHTTPError(error as Error));
+        }
+    }
 
     #controlHTTPError(error: Error) {
         if ((error as Error).message === 'ID not found') {

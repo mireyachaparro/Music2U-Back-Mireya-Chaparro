@@ -2,7 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import { setCors } from './middlewares/cors.js';
-import { userRouter } from './routers/users.js';
+import { usersRouter } from './routers/users.js';
+import { albumsRouter } from './routers/albums.js';
 
 export const app = express();
 
@@ -22,4 +23,5 @@ app.get('/', (_req, res) => {
     res.send('API ALBUMS').end();
 });
 
-app.use('/users', userRouter);
+app.use('/users', usersRouter);
+app.use('/albums', albumsRouter);
