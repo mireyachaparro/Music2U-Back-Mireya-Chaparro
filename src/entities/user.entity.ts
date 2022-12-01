@@ -56,13 +56,13 @@ export const userSchema = new Schema<User>({
     favorites: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'Albums',
+            ref: 'Album',
         },
     ],
     possessions: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'Albums',
+            ref: 'Album',
         },
     ],
 });

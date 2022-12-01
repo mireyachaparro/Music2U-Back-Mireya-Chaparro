@@ -3,7 +3,7 @@ import { dbConnect } from '../db.connect';
 import { UserModel } from '../entities/user.entity';
 import { UserRepository } from './user.repository';
 
-describe('Given an instance of RobotRepository', () => {
+describe('Given an instance of AlbumRepository', () => {
     const mock = [{ name: 'first' }, { name: 'second' }];
     const setUpCollection = async () => {
         await dbConnect();
@@ -41,7 +41,7 @@ describe('Given an instance of RobotRepository', () => {
             expect(result.name).toEqual(mock[0].name);
         });
 
-        test('then if ID is malformed, it throws an error', async () => {
+        test('then if ID is malformed, it throws a casting error', async () => {
             expect(async () => {
                 await repository.get(malformed);
             }).rejects.toThrowError(mongoose.Error.CastError);
@@ -52,34 +52,86 @@ describe('Given an instance of RobotRepository', () => {
             expect(async () => {
                 await repository.get(invalid);
             }).rejects.toThrowError(mongoose.MongooseError);
+        });
+    });
+
+    describe('when it calls post and it calls Model.create', () => {
+        const spyModel = jest.spyOn(UserModel, 'create');
+        test('then if data is valid, it returns the new user', async () => {
+            const newUser = {
+                name: 'mireya',
+                password:
+                    '$2a$10$GLJAg0Vs9rlGQPDezEZ7juj9dv1Y0lnY.p4lxEiz2WwXCvOzlf/.G',
+            };
+            const result = await repository.post(newUser);
+
+            expect(spyModel).toHaveBeenCalled();
+            expect(result.name).toBe(newUser.name);
+        });
+    });
+
+    describe('when it calls find and it calls findOne', () => {
+        const spyModel = jest.spyOn(UserModel, 'findOne');
+        test('then if data is valid, it returns the album', async () => {
+            const result = await repository.find(mock[0]);
+            expect(spyModel).toHaveBeenCalled();
+            expect(result.name).toEqual(mock[0].name);
+        });
+
+        test('then if data is invalid, it throws an error', async () => {
+            expect(async () => {
+                await repository.find({ name: 'nombre inexistent' });
+            }).rejects.toThrowError(mongoose.MongooseError);
             expect(spyModel).toHaveBeenCalled();
         });
     });
 
-    //test de findone
-    // describe('when it calls find and it calls Model.findOne', () => {
+    describe('when it calls patch and it calls Model.findByIdAndUpdate', () => {
+        const spyModel = jest.spyOn(UserModel, 'findByIdAndUpdate');
+        const updatedName = 'updated name';
+        test('then if id is valid and exists, it returns the user updated', async () => {
+            const result = await repository.patch(testIds[0], {
+                name: updatedName,
+            });
+            expect(spyModel).toHaveBeenCalled();
+            expect(result.name).toEqual(updatedName);
+        });
 
-    //     const spyModel = jest.spyOn(UserModel, 'find');
+        test('then if id is invalid, it throws an error', async () => {
+            expect(async () => {
+                await repository.patch(invalid, {
+                    name: updatedName,
+                });
+            }).rejects.toThrowError(mongoose.MongooseError);
+            expect(spyModel).toHaveBeenCalled();
+        });
+    });
 
-    //     test("when ")
-    // });
+    describe('when it calls delete and it calls findByIdAndDelete', () => {
+        const spyModel = jest.spyOn(UserModel, 'findByIdAndDelete');
+        //da undefined
+        // test('then if id is valid, it returns an empty object', async () => {
+        //     const result = await repository.delete(testIds[0]);
+        //     expect(spyModel).toHaveBeenCalled();
+        //     expect(result).toEqual({});
+        // });
 
-    //este test falla y no se por que
-    // describe('when it calls post and it callss Model.create', () => {
-    //     const spyModel = jest.spyOn(UserModel, 'create');
-    //     test('then if data is valid, it returns the new user', async () => {
-    //         const newUser = {
-    //             name: 'mireya',
-    //             password:
-    //                 '$2a$10$GLJAg0Vs9rlGQPDezEZ7juj9dv1Y0lnY.p4lxEiz2WwXCvOzlf/.G',
-    //         };
-    //         const result = await repository.post(newUser);
-    //         console.log(newUser);
-    //         console.log(result);
-    //         console.log(result.name);
-    //         console.log(newUser.name);
-    //         // expect(spyModel).toHaveBeenCalled();
-    //         expect(await result.name).toEqual(await newUser.name);
-    //     });
-    // });
+        test('then if id is invalid, it throws an error', async () => {
+            expect(async () => {
+                await repository.delete(invalid);
+            }).rejects.toThrowError(mongoose.MongooseError);
+            expect(spyModel).toHaveBeenCalled();
+        });
+
+        test('then if id is malformed, it throws a casting error', async () => {
+            expect(async () => {
+                await repository.delete(invalid);
+            }).rejects.toThrowError(mongoose.MongooseError);
+            expect(spyModel).toHaveBeenCalled();
+        });
+    });
+
+    afterAll(async () => {
+        await mongoose.disconnect();
+    });
 });

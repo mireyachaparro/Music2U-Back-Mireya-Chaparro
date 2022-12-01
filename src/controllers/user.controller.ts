@@ -1,4 +1,4 @@
-import { NextFunction, response, Request } from 'express';
+import { NextFunction, Response, Request } from 'express';
 import { HTTPError } from '../interfaces/error';
 import { UserRepoGeneric } from '../repositories/generic.repository';
 import { createToken, passwordValidate } from '../services/auth';
@@ -9,7 +9,7 @@ export class UserController {
     async register(req: Request, res: Response, next: NextFunction) {
         try {
             const user = await this.repository.post(req.body);
-            response.status(201).json({ user });
+            res.status(201).json({ user });
         } catch (error) {
             const httpError = new HTTPError(
                 503,
@@ -34,6 +34,7 @@ export class UserController {
                 last_name: user.last_name,
                 email: user.email,
             });
+            res.status(201);
             res.json({ token });
         } catch (error) {
             next(error as Error);
