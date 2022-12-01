@@ -12,7 +12,7 @@ export class AlbumController {
     async getAll(req: Request, res: Response, next: NextFunction) {
         try {
             const albums = await this.albumRepository.getAll();
-            res.json({ albums });
+            res.json(albums);
         } catch (error) {
             next(this.#controlHTTPError(error as Error));
         }
@@ -27,20 +27,21 @@ export class AlbumController {
         }
     }
 
-    async post(req: Request, res: Response, next: NextFunction) {
+    async post(req: RequestPayload, res: Response, next: NextFunction) {
         try {
-            if (!req.payload) {
-                throw new Error('Invalid payload');
-            }
-            const user = await this.userRepository.get(req.payload.id);
-            req.body.owner = user.id;
+            // if (!req.payload) {
+            //     throw new Error('Invalid payload');
+            // }
+            // const user = await this.userRepository.get(req.payload.id);
+            // req.body.owner = user.id;
             const album = await this.albumRepository.post(req.body);
-            user.possessions.push(album.id);
-            this.userRepository.patch(user.id.toString(), {
-                possessions: user.possessions,
-            });
+
+            // user.possessions.push(album.id);
+            // this.userRepository.patch(user.id.toString(), {
+            //     possessions: user.possessions,
+            // });
             res.status(201);
-            res.json({ album });
+            res.json(album);
         } catch (error) {
             next(this.#controlHTTPError(error as Error));
         }

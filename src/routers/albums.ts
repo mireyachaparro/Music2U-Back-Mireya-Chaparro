@@ -9,7 +9,7 @@ const controller = new AlbumController(
     UserRepository.getInstance()
 );
 albumsRouter.get('/', controller.getAll.bind(controller));
-albumsRouter.get('/:id', controller.getAll.bind(controller));
-albumsRouter.post('/', controller.getAll.bind(controller));
-albumsRouter.patch('/:id', controller.getAll.bind(controller));
-albumsRouter.delete('/:id', controller.getAll.bind(controller));
+albumsRouter.get('/:id', controller.get.bind(controller));
+albumsRouter.post('/', controller.post.bind(controller));
+albumsRouter.patch('/:id', controller.patch.bind(controller));
+albumsRouter.delete('/:id', controller.delete.bind(controller));
