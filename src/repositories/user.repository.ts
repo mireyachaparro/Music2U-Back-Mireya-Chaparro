@@ -19,9 +19,9 @@ export class UserRepository implements UserRepoGeneric {
     }
 
     async get(id: id): Promise<User> {
-        const result = await this.#Model.findById(id); //el await sale como code smell, si se quita el await, se tiene que poner return as unknown as user, que es peor
-        //aqui se quita el error porque se maneja desde un nivel superior
-        return result as User;
+        const result = await this.#Model.findById(id);
+        if (result === null) throw new Error('ID not found');
+        return result;
     }
 
     async post(data: Partial<User>): Promise<User> {
@@ -49,7 +49,7 @@ export class UserRepository implements UserRepoGeneric {
 
     async delete(id: id): Promise<void> {
         const result = await this.#Model.findByIdAndDelete(id);
-        if (result === null) throw new Error('ID not found');
+        if (!result) throw new Error('ID not found');
         return;
     }
 }

@@ -24,22 +24,45 @@ export type User = {
 };
 
 export const userSchema = new Schema<User>({
-    name: {},
+    // name: {
+    //     type: String,
+    //     required: true,
+    // },
+    // last_name: {
+    //     type: String,
+    //     required: true,
+    // },
+    // email: {
+    //     type: String,
+    //     required: true,
+    //     unique: true,
+    // },
+    // password: {
+    //     type: String,
+    //     required: true,
+    // },
+    name: String,
     last_name: String,
     email: String,
     password: String,
-    phone: String,
-    birthday: String,
+    phone: {
+        type: String,
+        required: false,
+    },
+    birthday: {
+        type: String,
+        required: false,
+    },
     favorites: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'Albums',
+            ref: 'Album',
         },
     ],
     possessions: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'Albums',
+            ref: 'Album',
         },
     ],
 });
