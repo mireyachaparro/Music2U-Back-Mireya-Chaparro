@@ -53,7 +53,7 @@ describe('Given an instance of AlbumRepository', () => {
 
     describe('when it calls get and it calls Model.findById', () => {
         const spyModel = jest.spyOn(AlbumModel, 'findById');
-        test('then if ID is valid, it returns the robot', async () => {
+        test('then if ID is valid, it returns the album', async () => {
             const result = await repository.get(testIds[0]);
             expect(spyModel).toHaveBeenCalled();
             expect(result.name).toEqual(mock[0].name);
@@ -90,11 +90,74 @@ describe('Given an instance of AlbumRepository', () => {
         });
     });
 
-    // describe("when it calls post and it calls Model.create", () => {
-    //     const spyModel = jest.spyOn(AlbumModel, "create");
-    //     test("then if data is valid, ite returns the new album", async () => {
-    //         const newAlbum = {name: "prueba"}
-    //     })
-    //     const result = await respository.post(newAlbum);
-    // })
+    describe('when it calls post and it calls Model.create', () => {
+        const spyModel = jest.spyOn(AlbumModel, 'create');
+        test('then if data is valid, it returns the new album', async () => {
+            const newAlbum = {
+                name: 'add album',
+                price: 10,
+                format: 'CD',
+                gender: 'Rap',
+                year: 2010,
+                image: '987.jpg',
+                artist: 'Artista',
+            };
+            const result = await repository.post(newAlbum);
+            expect(spyModel).toHaveBeenCalled();
+            expect(result.name).toEqual(newAlbum.name);
+        });
+
+        test('if data is invalid, it throws an error', async () => {
+            const newAlbum = { name: 'Add album' };
+            expect(async () => {
+                await repository.post(newAlbum);
+            }).rejects.toThrowError(mongoose.MongooseError);
+            expect(spyModel).toHaveBeenCalled();
+        });
+    });
+
+    describe('when it calls patch and it calls Model.findByIdAndUpdate', () => {
+        const spyModel = jest.spyOn(AlbumModel, 'findByIdAndUpdate');
+        test('then if id is valid, it returns the updated album', async () => {
+            const updatedName = 'updated name';
+            const result = await repository.patch(testIds[0], {
+                name: updatedName,
+            });
+            expect(spyModel).toHaveBeenCalled();
+            expect(result.name).toEqual(updatedName);
+        });
+
+        test('then if id is invalid, it throws an error', async () => {
+            expect(async () => {
+                await repository.patch(invalid, {});
+            }).rejects.toThrowError(mongoose.MongooseError);
+            expect(spyModel).toHaveBeenCalled();
+        });
+    });
+
+    describe('when it calls delete and it calls Model.delete', () => {
+        const spyModel = jest.spyOn(AlbumModel, 'findByIdAndDelete');
+        // test('then if id is valid, it returns an empty object', async () => {
+        //     const result = await repository.delete(testIds[0]);
+        //     expect(spyModel).toHaveBeenCalled();
+        //     expect(result).toEqual({});
+        // });
+
+        test('then if id is invalid, it throws an error', async () => {
+            expect(async () => {
+                await repository.delete(invalid);
+            }).rejects.toThrowError(mongoose.MongooseError);
+            expect(spyModel).toHaveBeenCalled();
+        });
+
+        test('then if id is malformed, it throws an error', async () => {
+            expect(async () => {
+                await repository.delete(malformed);
+            }).rejects.toThrowError(mongoose.MongooseError);
+            expect(spyModel).toHaveBeenCalled();
+        });
+    });
+    afterAll(() => {
+        mongoose.disconnect();
+    });
 });

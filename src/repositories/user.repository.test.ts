@@ -131,7 +131,7 @@ describe('Given an instance of AlbumRepository', () => {
         });
     });
 
-    afterAll(async () => {
-        await mongoose.disconnect();
+    afterAll(() => {
+        mongoose.disconnect();
     });
 });
