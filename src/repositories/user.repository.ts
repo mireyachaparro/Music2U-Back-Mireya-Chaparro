@@ -49,7 +49,7 @@ export class UserRepository implements UserRepoGeneric {
 
     async delete(id: id): Promise<void> {
         const result = await this.#Model.findByIdAndDelete(id);
-        if (result === null) throw new Error('ID not found');
+        if (!result) throw new Error('ID not found');
         return;
     }
 }
