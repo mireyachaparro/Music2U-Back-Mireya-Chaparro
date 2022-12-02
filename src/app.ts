@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import { setCors } from './middlewares/cors.js';
 import { usersRouter } from './routers/users.js';
 import { albumsRouter } from './routers/albums.js';
+import { errorManager } from './middlewares/errors.js';
 
 export const app = express();
 
@@ -25,3 +26,5 @@ app.get('/', (_req, res) => {
 
 app.use('/users', usersRouter);
 app.use('/albums', albumsRouter);
+
+app.use(errorManager);
