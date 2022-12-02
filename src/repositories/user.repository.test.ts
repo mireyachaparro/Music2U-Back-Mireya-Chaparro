@@ -46,31 +46,29 @@ describe('Given an instance of UserRepository', () => {
     //     });
     // });
 
-    // describe('when it calls get and it calls Model.findById', () => {
-    //     const spyModel = jest.spyOn(UserModel, 'findById');
+    describe('when it calls get and it calls Model.findById', () => {
+        const spyModel = jest.spyOn(UserModel, 'findById');
 
-    //no hace falta
-    //     test('then if ID is valid, it returns this user', async () => {
-    //         const result = await repository.get(testIds[0]);
-    //         expect(spyModel).toHaveBeenCalled();
-    //         expect(result.name).toEqual(mock[0].name);
-    //     });
+        test('then if ID is valid, it returns this user', async () => {
+            const result = await repository.get(testIds[0]);
+            expect(spyModel).toHaveBeenCalled();
+            expect(result.name).toEqual(mock[0].name);
+        });
 
-    //no hace falta
-    //     test('then if ID is malformed, it throws a casting error', async () => {
-    //         expect(async () => {
-    //             await repository.get(malformed);
-    //         }).rejects.toThrowError(mongoose.Error.CastError);
-    //         expect(spyModel).toHaveBeenCalled();
-    //     });
+        test('then if ID is malformed, it throws a casting error', async () => {
+            expect(async () => {
+                await repository.get(malformed);
+            }).rejects.toThrowError(mongoose.Error.CastError);
+            expect(spyModel).toHaveBeenCalled();
+        });
 
-    //     test('then if ID is invalid, it throws an error', async () => {
-    //         expect(async () => {
-    //             await repository.get(invalid);
-    //         }).rejects.toThrow();
-    //         expect(spyModel).toHaveBeenCalled();
-    //     });
-    // });
+        test.skip('then if ID is invalid, it throws an error', async () => {
+            expect(async () => {
+                await repository.get(invalid);
+            }).rejects.toThrow();
+            expect(spyModel).toHaveBeenCalled();
+        });
+    });
 
     describe('when it calls post and it calls Model.create', () => {
         const spyModel = jest.spyOn(UserModel, 'create');
@@ -97,7 +95,7 @@ describe('Given an instance of UserRepository', () => {
             expect(result.name).toEqual(mock[0].name);
         });
 
-        test('then if data is invalid, it throws an error', async () => {
+        test.skip('then if data is invalid, it throws an error', async () => {
             //con esto devuelve null que es lo que estoy controlando
             // const result = await repository.find({
             //     email: 'inexistent@gmail.com',

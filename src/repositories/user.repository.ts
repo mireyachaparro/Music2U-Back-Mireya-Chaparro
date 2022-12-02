@@ -22,7 +22,7 @@ export class UserRepository implements UserRepoGeneric {
     //esto no hace falta
     async get(id: id): Promise<User> {
         const result = this.#Model.findById(id);
-        if (result === undefined) throw new Error('ID not found');
+        if (!result) throw new Error('ID not found');
         return result as unknown as Promise<User>;
     }
 
