@@ -29,19 +29,17 @@ export class AlbumController {
 
     async post(req: RequestPayload, res: Response, next: NextFunction) {
         try {
-            //pide payload y me da error
-            // if (!req.payload) {
-            //     throw new Error('Invalid payload');
-            // }
-            // const user = await this.userRepository.get(req.payload.id);
-            // req.body.owner = user.id;
+            if (!req.payload) {
+                throw new Error('Invalid payload');
+            }
+            const user = await this.userRepository.get(req.payload.id);
+            req.body.owner = user.id;
             const album = await this.albumRepository.post(req.body);
 
-            //pide payload y da error
-            // user.possessions.push(album.id);
-            // this.userRepository.patch(user.id.toString(), {
-            //     possessions: user.possessions,
-            // });
+            user.possessions.push(album.id);
+            this.userRepository.patch(user.id.toString(), {
+                possessions: user.possessions,
+            });
             res.status(201);
             res.json(album);
         } catch (error) {

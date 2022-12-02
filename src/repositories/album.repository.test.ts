@@ -137,12 +137,11 @@ describe('Given an instance of AlbumRepository', () => {
 
     describe('when it calls delete and it calls Model.delete', () => {
         const spyModel = jest.spyOn(AlbumModel, 'findByIdAndDelete');
-        //da error
-        // test('then if id is valid, it returns an empty object', async () => {
-        //     const result = await repository.delete(testIds[0]);
-        //     expect(spyModel).toHaveBeenCalled();
-        //     expect(result).toEqual({});
-        // });
+        test.skip('then if id is valid, it returns an empty object', async () => {
+            const result = await repository.delete(testIds[0]);
+            expect(spyModel).toHaveBeenCalled();
+            expect(result).toBe({});
+        });
 
         test('then if id is invalid, it throws an error', async () => {
             expect(async () => {

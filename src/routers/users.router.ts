@@ -12,3 +12,5 @@ const controller = new UserController(
 
 usersRouter.post('/register', controller.register.bind(controller));
 usersRouter.post('/login', controller.login.bind(controller));
+usersRouter.patch('/addFav/:id', controller.addFav.bind(controller));
+usersRouter.patch('/deleteFav/:id', controller.deleteFav.bind(controller));
