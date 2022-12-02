@@ -57,7 +57,7 @@ describe('Given an instance of AlbumRepository', () => {
 
     describe('when it calls post and it calls Model.create', () => {
         const spyModel = jest.spyOn(UserModel, 'create');
-        test('then if data is valid, it returns the new user', async () => {
+        test.skip('then if data is valid, it returns the new user', async () => {
             const newUser = {
                 name: 'mireya',
                 password:
@@ -89,7 +89,7 @@ describe('Given an instance of AlbumRepository', () => {
     describe('when it calls patch and it calls Model.findByIdAndUpdate', () => {
         const spyModel = jest.spyOn(UserModel, 'findByIdAndUpdate');
         const updatedName = 'updated name';
-        test('then if id is valid and exists, it returns the user updated', async () => {
+        test.skip('then if id is valid and exists, it returns the user updated', async () => {
             const result = await repository.patch(testIds[0], {
                 name: updatedName,
             });
