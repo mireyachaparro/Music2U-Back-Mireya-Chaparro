@@ -4,7 +4,20 @@ import { UserModel } from '../entities/user.entity';
 import { UserRepository } from './user.repository';
 
 describe('Given an instance of UserRepository', () => {
-    const mock = [{ name: 'first' }, { name: 'second' }];
+    const mock = [
+        {
+            name: 'first',
+            last_name: 'primero',
+            email: 'first@gmail.com',
+            password: '12345',
+        },
+        {
+            name: 'second',
+            last_name: 'segundo',
+            email: 'second@gmail.com',
+            password: '6789',
+        },
+    ];
     const setUpCollection = async () => {
         await dbConnect();
         await UserModel.deleteMany();
@@ -66,6 +79,8 @@ describe('Given an instance of UserRepository', () => {
                 name: 'mireya',
                 password:
                     '$2a$10$GLJAg0Vs9rlGQPDezEZ7juj9dv1Y0lnY.p4lxEiz2WwXCvOzlf/.G',
+                email: 'pruebaa@gmial.com',
+                last_name: 'chaparro',
             };
             const result = await repository.post(newUser);
 
@@ -74,22 +89,30 @@ describe('Given an instance of UserRepository', () => {
         });
     });
 
-    //no hace falta
-    // describe('when it calls find and it calls findOne', () => {
-    //     const spyModel = jest.spyOn(UserModel, 'findOne');
-    //     test('then if data is valid, it returns the user', async () => {
-    //         const result = await repository.find(mock[0]);
-    //         expect(spyModel).toHaveBeenCalled();
-    //         expect(result.name).toEqual(mock[0].name);
-    //     });
+    describe('when it calls find and it calls findOne', () => {
+        const spyModel = jest.spyOn(UserModel, 'findOne');
+        test('then if data is valid, it returns the user', async () => {
+            const result = await repository.find(mock[0]);
+            expect(spyModel).toHaveBeenCalled();
+            expect(result.name).toEqual(mock[0].name);
+        });
 
-    //     test('then if data is invalid, it throws an error', async () => {
-    //         expect(async () => {
-    //             await repository.find({ name: 'nombre inexistent' });
-    //         }).rejects.toThrowError(mongoose.MongooseError);
-    //         expect(spyModel).toHaveBeenCalled();
-    //     });
-    // });
+        test('then if data is invalid, it throws an error', async () => {
+            //con esto devuelve null que es lo que estoy controlando
+            // const result = await repository.find({
+            //     email: 'inexistent@gmail.com',
+            // });
+            // expect(result).toBe(null);
+            // expect(spyModel).toHaveBeenCalled();
+            //con esto espera undefined
+            // expect(async () => {
+            //     await repository.find({
+            //         email: 'email@gmail.com',
+            //     });
+            // }).rejects.toThrowError(mongoose.MongooseError);
+            // expect(spyModel).toHaveBeenCalled();
+        });
+    });
 
     describe('when it calls patch and it calls Model.findByIdAndUpdate', () => {
         const spyModel = jest.spyOn(UserModel, 'findByIdAndUpdate');

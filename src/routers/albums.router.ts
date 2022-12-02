@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { AlbumController } from '../controllers/album.controller.js';
+import { logged } from '../middlewares/interceptors.js';
 import { AlbumRepository } from '../repositories/album.repository.js';
 import { UserRepository } from '../repositories/user.repository.js';
 
@@ -9,7 +10,7 @@ const controller = new AlbumController(
     UserRepository.getInstance()
 );
 albumsRouter.get('/', controller.getAll.bind(controller));
-albumsRouter.get('/:id', controller.get.bind(controller));
-albumsRouter.post('/', controller.post.bind(controller));
-albumsRouter.patch('/:id', controller.patch.bind(controller));
-albumsRouter.delete('/:id', controller.delete.bind(controller));
+albumsRouter.get('/:id', logged, controller.get.bind(controller));
+albumsRouter.post('/', logged, controller.post.bind(controller));
+albumsRouter.patch('/:id', logged, controller.patch.bind(controller));
+albumsRouter.delete('/:id', logged, controller.delete.bind(controller));

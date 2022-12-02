@@ -22,7 +22,7 @@ export class UserController {
     async login(req: Request, res: Response, next: NextFunction) {
         try {
             const user = await this.userRepository.find({
-                name: req.body.name,
+                email: req.body.email,
             });
             const PasswordValid = await passwordValidate(
                 req.body.password,
@@ -37,6 +37,22 @@ export class UserController {
             });
             res.status(201);
             res.json({ token });
+        } catch (error) {
+            next(this.#controlHTTPError(error as Error));
+        }
+    }
+
+    async addFav(req: Request, res: Response, next: NextFunction) {
+        try {
+            //
+        } catch (error) {
+            next(this.#controlHTTPError(error as Error));
+        }
+    }
+
+    async deleteFav(req: Request, res: Response, next: NextFunction) {
+        try {
+            //
         } catch (error) {
             next(this.#controlHTTPError(error as Error));
         }

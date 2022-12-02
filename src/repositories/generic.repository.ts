@@ -5,7 +5,7 @@ export type id = number | string;
 
 export interface UserRepoGeneric {
     // getAll: () => Promise<Array<User>>;
-    // get: (id: id) => Promise<User>;
+    get: (id: id) => Promise<User>;
     post: (data: Partial<User>) => Promise<User>;
     // find: (data: Partial<User>) => Promise<User>;
     patch: (id: id, data: Partial<User>) => Promise<User>;
