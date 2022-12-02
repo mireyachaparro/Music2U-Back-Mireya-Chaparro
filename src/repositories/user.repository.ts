@@ -13,16 +13,18 @@ export class UserRepository implements UserRepoGeneric {
 
     #Model = UserModel;
 
-    async getAll(): Promise<Array<User>> {
-        const result = this.#Model.find();
-        return result;
-    }
+    //no hace falta
+    // async getAll(): Promise<Array<User>> {
+    //     const result = this.#Model.find();
+    //     return result;
+    // }
 
-    async get(id: id): Promise<User> {
-        const result = this.#Model.findById(id);
-        if (result === null) throw new Error('ID not found');
-        return result as unknown as Promise<User>;
-    }
+    //esto no hace falta
+    // async get(id: id): Promise<User> {
+    //     const result = this.#Model.findById(id);
+    //     if (result === undefined) throw new Error('ID not found');
+    //     return result as unknown as Promise<User>;
+    // }
 
     async post(data: Partial<User>): Promise<User> {
         if (typeof data.password !== 'string')
@@ -33,11 +35,12 @@ export class UserRepository implements UserRepoGeneric {
         return result;
     }
 
-    async find(search: Partial<User>): Promise<User> {
-        const result = this.#Model.findOne(search);
-        if (!result) throw new Error('ID not found');
-        return result as unknown as Promise<User>;
-    }
+    //no hace falta
+    // async find(search: Partial<User>): Promise<User> {
+    //     const result = this.#Model.findOne(search);
+    //     if (!result) throw new Error('ID not found');
+    //     return result as unknown as Promise<User>;
+    // }
 
     async patch(id: id, data: Partial<User>): Promise<User> {
         const result = this.#Model.findByIdAndUpdate(id, data, {
@@ -47,9 +50,10 @@ export class UserRepository implements UserRepoGeneric {
         return result as unknown as Promise<User>;
     }
 
-    async delete(id: id): Promise<void> {
-        const result = await this.#Model.findByIdAndDelete(id);
-        if (!result) throw new Error('ID not found');
-        return;
-    }
+    //no hace falta
+    // async delete(id: id): Promise<void> {
+    //     const result = await this.#Model.findByIdAndDelete(id);
+    //     if (!result) throw new Error('ID not found');
+    //     return;
+    // }
 }
