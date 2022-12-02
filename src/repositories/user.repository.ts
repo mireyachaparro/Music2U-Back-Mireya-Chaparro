@@ -19,9 +19,9 @@ export class UserRepository implements UserRepoGeneric {
     }
 
     async get(id: id): Promise<User> {
-        const result = await this.#Model.findById(id);
+        const result = this.#Model.findById(id);
         if (result === null) throw new Error('ID not found');
-        return result;
+        return result as unknown as Promise<User>;
     }
 
     async post(data: Partial<User>): Promise<User> {
@@ -34,21 +34,21 @@ export class UserRepository implements UserRepoGeneric {
     }
 
     async find(search: Partial<User>): Promise<User> {
-        const result = await this.#Model.findOne(search);
+        const result = this.#Model.findOne(search);
         if (!result) throw new Error('ID not found');
-        return result;
+        return result as unknown as Promise<User>;
     }
 
     async patch(id: id, data: Partial<User>): Promise<User> {
-        const result = await this.#Model.findByIdAndUpdate(id, data, {
+        const result = this.#Model.findByIdAndUpdate(id, data, {
             new: true,
         });
         if (!result) throw new Error('ID not found');
-        return result;
+        return result as unknown as Promise<User>;
     }
 
     async delete(id: id): Promise<void> {
-        const result = await this.#Model.findByIdAndDelete(id);
+        const result = this.#Model.findByIdAndDelete(id);
         if (!result) throw new Error('ID not found');
         return;
     }
