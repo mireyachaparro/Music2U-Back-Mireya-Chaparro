@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { dbConnect } from '../db.connect';
 import { UserModel } from '../entities/user.entity';
+import { AlbumRepository } from './album.repository';
 import { UserRepository } from './user.repository';
 
 describe('Given an instance of UserRepository', () => {
@@ -27,10 +28,12 @@ describe('Given an instance of UserRepository', () => {
     };
 
     const repository = UserRepository.getInstance();
+    const albumRepository = AlbumRepository.getInstance();
 
     const malformed = '1';
     const invalid = '537b422da27b69c98b1916e1';
     let testIds: Array<string>;
+    // let album = mongoose.model('Album', AlbumSchema);
 
     beforeAll(async () => {
         testIds = await setUpCollection();
@@ -160,6 +163,7 @@ describe('Given an instance of UserRepository', () => {
     //         expect(spyModel).toHaveBeenCalled();
     //     });
 
+    //no hace falta
     //     test('then if id is malformed, it throws a casting error', async () => {
     //         expect(async () => {
     //             await repository.delete(invalid);

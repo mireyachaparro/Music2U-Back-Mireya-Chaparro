@@ -41,10 +41,6 @@ export const userSchema = new Schema<User>({
         type: String,
         required: true,
     },
-    // name: String,
-    // last_name: String,
-    // email: String,
-    // password: String,
     phone: {
         type: String,
         required: false,

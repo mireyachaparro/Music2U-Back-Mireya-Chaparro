@@ -21,7 +21,9 @@ export class UserRepository implements UserRepoGeneric {
 
     //esto no hace falta
     async get(id: id): Promise<User> {
-        const result = this.#Model.findById(id);
+        const result = this.#Model.findById(id).populate('possessions', {
+            owner: 0,
+        });
         if (!result) throw new Error('ID not found');
         return result as unknown as Promise<User>;
     }
@@ -45,9 +47,13 @@ export class UserRepository implements UserRepoGeneric {
     }
 
     async patch(id: id, data: Partial<User>): Promise<User> {
-        const result = this.#Model.findByIdAndUpdate(id, data, {
-            new: true,
-        });
+        const result = this.#Model
+            .findByIdAndUpdate(id, data, {
+                new: true,
+            })
+            .populate('possessions', {
+                owner: 0,
+            });
         if (!result) throw new Error('ID not found');
         return result as unknown as Promise<User>;
     }

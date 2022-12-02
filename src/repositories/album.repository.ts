@@ -1,4 +1,3 @@
-import { Types } from 'mongoose';
 import { Album, AlbumModel, ProtoAlbum } from '../entities/album.entity.js';
 import { AlbumRepoGeneric, id } from './generic.repository.js';
 
@@ -16,22 +15,22 @@ export class AlbumRepository implements AlbumRepoGeneric {
 
     async getAll(): Promise<Array<Album>> {
         const result = this.#Model.find().populate('owner', {
-            albums: 0,
+            possessions: 0,
         });
         return result;
     }
 
     async get(id: id): Promise<Album> {
-        const result = await this.#Model
-            .findById(id)
-            .populate<{ _id: Types.ObjectId }>('owner');
+        const result = await this.#Model.findById(id).populate('owner', {
+            possessions: 0,
+        });
         if (!result) throw new Error('ID not found');
         return result;
     }
 
     async find(search: Partial<Album>): Promise<Album> {
         const result = await this.#Model.findOne(search).populate('owner', {
-            albums: 0,
+            possessions: 0,
         });
         if (!result) throw new Error('ID not found');
         return result;
@@ -40,7 +39,9 @@ export class AlbumRepository implements AlbumRepoGeneric {
     async post(data: ProtoAlbum): Promise<Album> {
         const result = await (
             await this.#Model.create(data)
-        ).populate('owner', { albums: 0 });
+        ).populate('owner', {
+            possessions: 0,
+        });
         return result;
     }
 
@@ -50,7 +51,7 @@ export class AlbumRepository implements AlbumRepoGeneric {
                 new: true,
             })
             .populate('owner', {
-                albums: 0,
+                possessions: 0,
             });
         if (!result) throw new Error('ID not found');
         return result;
@@ -60,7 +61,7 @@ export class AlbumRepository implements AlbumRepoGeneric {
         const result = await this.#Model
             .findByIdAndDelete(id)
             .populate('owner', {
-                albums: 0,
+                possessions: 0,
             });
         if (!result) throw new Error('ID not found');
         return;
