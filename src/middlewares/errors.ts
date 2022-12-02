@@ -3,11 +3,11 @@ import { Request, Response, NextFunction } from 'express';
 
 export const errorManager = (
     error: MyErrors,
-    req: Request,
+    _req: Request,
     res: Response,
     next: NextFunction
 ) => {
-    next;
+    next();
     let status = error.statusCode || 500;
     if (error.name === 'ValidationError') {
         status = 406;
