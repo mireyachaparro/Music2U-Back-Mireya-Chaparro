@@ -36,12 +36,14 @@ describe('Given an instance of UserRepository', () => {
     // describe('when it calls get and it calls Model.findById', () => {
     //     const spyModel = jest.spyOn(UserModel, 'findById');
 
+    //no hace falta
     //     test('then if ID is valid, it returns this user', async () => {
     //         const result = await repository.get(testIds[0]);
     //         expect(spyModel).toHaveBeenCalled();
     //         expect(result.name).toEqual(mock[0].name);
     //     });
 
+    //no hace falta
     //     test('then if ID is malformed, it throws a casting error', async () => {
     //         expect(async () => {
     //             await repository.get(malformed);
@@ -129,6 +131,7 @@ describe('Given an instance of UserRepository', () => {
     //     expect(result).toEqual({});
     // });
 
+    //no hace falta
     //     test('then if id is invalid, it throws an error', async () => {
     //         expect(async () => {
     //             await repository.delete(invalid);
