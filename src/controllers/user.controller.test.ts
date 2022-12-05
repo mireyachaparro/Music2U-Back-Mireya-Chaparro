@@ -9,12 +9,13 @@ import { createToken, passwordValidate } from '../services/auth.js';
 jest.mock('../services/auth.js');
 
 describe('given user controller', () => {
+    const mockPass =
+        '$2a$10$KF1T.wQ5sTYLHrnKwGpgv.MVwcTDyh0u5a3Rhvc2/W2AhGKLxG.lm';
     const mockData = {
         name: 'prueba',
         last_name: 'prueba',
         email: 'prueba@gmail.com',
-        password:
-            '$2a$10$KF1T.wQ5sTYLHrnKwGpgv.MVwcTDyh0u5a3Rhvc2/W2AhGKLxG.lm',
+        password: mockPass,
     };
 
     const userRepo = UserRepository.getInstance();
