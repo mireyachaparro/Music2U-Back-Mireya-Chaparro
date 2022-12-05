@@ -7,18 +7,19 @@ import { UserModel } from '../entities/user.entity';
 import { createToken, TokenPayload } from '../services/auth';
 
 const setCollection = async () => {
+    const mockPass = '12345';
     const usersMock = [
         {
             name: 'prueba uno',
             last_name: 'last name uno',
             email: 'prueba1@gmail.com',
-            password: '12345',
+            password: mockPass,
         },
         {
             name: 'prueba dos',
             last_name: 'last name dos',
             email: 'prueba2@gmail.com',
-            password: '12345',
+            password: mockPass,
         },
     ];
 
