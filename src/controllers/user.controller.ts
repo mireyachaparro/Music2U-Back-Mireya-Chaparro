@@ -3,6 +3,7 @@ import { HTTPError } from '../interfaces/error.js';
 import { UserRepository } from '../repositories/user.repository.js';
 import { AlbumRepository } from '../repositories/album.repository.js';
 import { createToken, passwordValidate } from '../services/auth.js';
+import { RequestPayload } from '../middlewares/interceptors.js';
 
 export class UserController {
     constructor(
@@ -15,7 +16,6 @@ export class UserController {
             const user = await this.userRepository.post(req.body);
             res.status(201);
             res.json({ user });
-            console.log(user.password);
         } catch (error) {
             next(this.#controlHTTPError(error as Error));
         }
@@ -26,10 +26,12 @@ export class UserController {
             const user = await this.userRepository.find({
                 email: req.body.email,
             });
+
             const PasswordValid = await passwordValidate(
                 req.body.password,
                 user.password
             );
+
             if (!PasswordValid) throw new Error();
             const token = createToken({
                 id: user.id.toString(),
@@ -44,26 +46,47 @@ export class UserController {
         }
     }
 
-    async addFav(req: Request, res: Response, next: NextFunction) {
+    async addFav(req: RequestPayload, res: Response, next: NextFunction) {
         try {
-            const user = await this.userRepository.get(req.params.id);
-            user.favorites.forEach((item) => {
-                if (item._id.toString() === req.body.id.toString()) {
-                    throw new Error('Duplicated id');
-                }
-                user.favorites.push(req.body.id);
-                const result = this.userRepository.patch(req.params.id, user);
-                res.status(200);
-                res.json(result);
-            });
+            if (!req.payload) throw new Error('Invalid payload');
+            const album = await this.albumRepository.get(req.params.id);
+            const user = await this.userRepository.get(req.payload.id);
+
+            if (user.favorites.includes(album.id))
+                throw new Error('este album ya esta en tus favoritos');
+            user.favorites.push(album.id);
+
+            const updateUser = await this.userRepository.patch(
+                user.id.toString(),
+                { favorites: user.favorites }
+            );
+
+            res.status(200);
+            res.json(updateUser);
         } catch (error) {
             next(this.#controlHTTPError(error as Error));
         }
     }
 
-    async deleteFav(req: Request, res: Response, next: NextFunction) {
+    async deleteFav(req: RequestPayload, res: Response, next: NextFunction) {
         try {
-            //
+            if (!req.payload) throw new Error('not found payload');
+
+            const user = await this.userRepository.get(req.payload.id);
+            console.log(user, 'Soy un User?');
+            const album = await this.albumRepository.get(req.params.id);
+
+            const deleteAlbum = user.favorites.filter(
+                (song) => song.toString() !== album.id.toString()
+            );
+
+            const updateUser = await this.userRepository.patch(
+                user.id.toString(),
+                { favorites: deleteAlbum }
+            );
+            console.log(res);
+            res.status(200);
+            res.json(updateUser);
         } catch (error) {
             next(this.#controlHTTPError(error as Error));
         }
