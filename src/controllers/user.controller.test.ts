@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction, response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import { User } from '../entities/user.entity';
 import { AlbumRepository } from '../repositories/album.repository';
@@ -32,7 +32,7 @@ describe('given user controller', () => {
         req = {
             params: { id: '1' },
             payload: { id: '3' },
-            body: { email: 'algo@gmail.com', password: '1234' },
+            body: { email: 'algo@gmail.com', password: mockPass },
         };
         res.status = jest.fn().mockReturnValue(201);
         res.json = jest.fn();
@@ -106,7 +106,7 @@ describe('given user controller', () => {
             userRepo.find = jest.fn().mockReturnValue({
                 ...mockData,
                 id: new String(),
-                password: 123,
+                password: mockPass,
             });
             userController.login(req as Request, res as Response, next);
             expect(next).toHaveBeenCalledWith(new Error());
@@ -120,17 +120,17 @@ describe('given user controller', () => {
     });
 
     describe('when it calls addFav', () => {
-        test('then it returns a token', async () => {
+        test('then if there isnt any payload, it throws an error', async () => {
             req = {};
             await userController.addFav(
                 req as RequestPayload,
                 res as Response,
-                next as NextFunction
+                next
             );
 
             expect(next).toHaveBeenCalled();
         });
-        test('then it returns a token', async () => {
+        test('then if there is not any album in favorite, it adds this album to favorites', async () => {
             albumRepo.get = jest.fn().mockResolvedValueOnce({ id: '2421' });
             userRepo.get = jest.fn().mockResolvedValueOnce({
                 favorites: [],
@@ -142,13 +142,13 @@ describe('given user controller', () => {
             await userController.addFav(
                 req as RequestPayload,
                 res as Response,
-                next as NextFunction
+                next
             );
 
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalled();
         });
-        test('then it returns a token', async () => {
+        test('then if we ewant to add an album yet existent, it throws an error', async () => {
             albumRepo.get = jest.fn().mockResolvedValueOnce({ id: '2421' });
             userRepo.get = jest.fn().mockResolvedValueOnce({
                 favorites: ['2421'],
@@ -160,14 +160,14 @@ describe('given user controller', () => {
             await userController.addFav(
                 req as RequestPayload,
                 res as Response,
-                next as NextFunction
+                next
             );
 
             expect(next).toHaveBeenCalled();
         });
     });
-    describe('When its called ', () => {
-        test('should first ', async () => {
+    describe('When it calls deleteFav', () => {
+        test('then if ', async () => {
             res.status = jest.fn().mockReturnValue(200);
             albumRepo.get = jest.fn().mockResolvedValueOnce({ id: '2421' });
             userRepo.get = jest.fn().mockResolvedValueOnce({
@@ -181,7 +181,7 @@ describe('given user controller', () => {
             await userController.deleteFav(
                 req as RequestPayload,
                 res as Response,
-                next as NextFunction
+                next
             );
             expect(res.status).toHaveBeenCalledWith(200);
         });
@@ -199,7 +199,7 @@ describe('given user controller', () => {
             await userController.deleteFav(
                 req as RequestPayload,
                 res as Response,
-                next as NextFunction
+                next
             );
             expect(next).toHaveBeenCalled();
         });

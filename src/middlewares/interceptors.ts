@@ -2,7 +2,6 @@ import { JwtPayload } from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
 import { HTTPError } from '../interfaces/error.js';
 import { readToken } from '../services/auth.js';
-import { AlbumRepository } from '../repositories/album.repository.js';
 export interface RequestPayload extends Request {
     payload?: JwtPayload;
 }
