@@ -19,7 +19,6 @@ export const logged = (
     }
     try {
         const token = authveri.slice(7);
-        readToken(token);
         req.payload = readToken(token);
         next();
     } catch (error) {

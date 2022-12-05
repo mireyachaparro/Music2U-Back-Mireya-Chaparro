@@ -4,5 +4,8 @@ export default {
     testEnvironment: 'node',
     testPathIgnorePatterns: ['dist'],
     resolver: 'jest-ts-webcompat-resolver',
-    coveragePathIgnorePatterns: ['src/entities'],
+    coveragePathIgnorePatterns: [
+        'src/entities',
+        'node_modules/supertest/lib/test.js',
+    ],
 };
