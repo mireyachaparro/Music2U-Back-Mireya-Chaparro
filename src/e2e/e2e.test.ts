@@ -22,34 +22,39 @@ const setCollection = async () => {
         },
     ];
 
-    const albumsMock = [
-        {
-            name: '',
-            artist: '',
-            image: '',
-            year: 2000,
-            gender: '',
-            format: '',
-            price: 10,
-        },
-        {
-            name: '',
-            artist: '',
-            image: '',
-            year: 2001,
-            gender: '',
-            format: '',
-            price: 20,
-        },
-    ];
+    //para albums
+    // const albumsMock = [
+    //     {
+    //         name: '',
+    //         artist: '',
+    //         image: '',
+    //         year: 2000,
+    //         gender: '',
+    //         format: '',
+    //         price: 10,
+    //     },
+    //     {
+    //         name: '',
+    //         artist: '',
+    //         image: '',
+    //         year: 2001,
+    //         gender: '',
+    //         format: '',
+    //         price: 20,
+    //     },
+    // ];
     await UserModel.deleteMany();
     await UserModel.insertMany(usersMock);
     await AlbumModel.deleteMany();
+    //para albums
     // await AlbumModel.insertMany(albumsMock);
     const data = await UserModel.find();
+    //para albums
     // const dataAlbum = await AlbumModel.find();
     const testIds = [data[0].id, data[1].id];
+    //para albums
     // const albumsIds = [dataAlbum[0].id, dataAlbum[1].id];
+    //para albums
     // return testIds && albumsIds;
     return testIds;
 };

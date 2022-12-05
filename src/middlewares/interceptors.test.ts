@@ -1,7 +1,8 @@
 import { logged, RequestPayload, registered } from './interceptors';
 import { Request, Response, NextFunction } from 'express';
 import { HTTPError } from '../interfaces/error';
-import { AlbumRepository } from '../repositories/album.repository';
+//para albums
+// import { AlbumRepository } from '../repositories/album.repository';
 
 describe('given logged middleware', () => {
     describe('when user is no authorize', () => {
@@ -52,8 +53,10 @@ describe('given register middleware', () => {
         const next: NextFunction = jest.fn();
         test.skip('then it returns an error', async () => {
             registered(req as Request, res as Response, next);
-            const albumRepository = AlbumRepository.getInstance();
-            const album = await albumRepository.get('537b422da27b69c98b1916e1');
+            //para albums
+            // const albumRepository = AlbumRepository.getInstance();
+            //para albums
+            // const album = await albumRepository.get('537b422da27b69c98b1916e1');
             expect(next).toHaveBeenCalledWith(
                 new HTTPError(403, 'Forbidden', 'User or password incorrect')
             );
