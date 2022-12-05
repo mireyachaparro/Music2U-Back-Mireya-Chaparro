@@ -16,6 +16,7 @@ export class AlbumRepository implements AlbumRepoGeneric {
     async getAll(): Promise<Array<Album>> {
         const result = this.#Model.find().populate('owner', {
             possessions: 0,
+            favorites: 0,
         });
         return result;
     }
@@ -23,6 +24,7 @@ export class AlbumRepository implements AlbumRepoGeneric {
     async get(id: id): Promise<Album> {
         const result = await this.#Model.findById(id).populate('owner', {
             possessions: 0,
+            favorites: 0,
         });
         if (!result) throw new Error('ID not found');
         return result;
@@ -31,6 +33,7 @@ export class AlbumRepository implements AlbumRepoGeneric {
     async find(search: Partial<Album>): Promise<Album> {
         const result = await this.#Model.findOne(search).populate('owner', {
             possessions: 0,
+            favorites: 0,
         });
         if (!result) throw new Error('ID not found');
         return result;
@@ -41,6 +44,7 @@ export class AlbumRepository implements AlbumRepoGeneric {
             await this.#Model.create(data)
         ).populate('owner', {
             possessions: 0,
+            favorites: 0,
         });
         return result;
     }
@@ -52,6 +56,7 @@ export class AlbumRepository implements AlbumRepoGeneric {
             })
             .populate('owner', {
                 possessions: 0,
+                favorites: 0,
             });
         if (!result) throw new Error('ID not found');
         return result;
@@ -62,6 +67,7 @@ export class AlbumRepository implements AlbumRepoGeneric {
             .findByIdAndDelete(id)
             .populate('owner', {
                 possessions: 0,
+                favorites: 0,
             });
         if (!result) throw new Error('ID not found');
         return;

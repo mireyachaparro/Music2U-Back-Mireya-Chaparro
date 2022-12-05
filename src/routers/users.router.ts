@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/user.controller.js';
+import { logged } from '../middlewares/interceptors.js';
 import { AlbumRepository } from '../repositories/album.repository.js';
 import { UserRepository } from '../repositories/user.repository.js';
 
@@ -12,5 +13,9 @@ const controller = new UserController(
 
 usersRouter.post('/register', controller.register.bind(controller));
 usersRouter.post('/login', controller.login.bind(controller));
-usersRouter.patch('/addFav/:id', controller.addFav.bind(controller));
-usersRouter.patch('/deleteFav/:id', controller.deleteFav.bind(controller));
+usersRouter.patch('/addFav/:id', logged, controller.addFav.bind(controller));
+usersRouter.patch(
+    '/deleteFav/:id',
+    logged,
+    controller.deleteFav.bind(controller)
+);
