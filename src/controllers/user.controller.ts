@@ -13,7 +13,9 @@ export class UserController {
     async register(req: Request, res: Response, next: NextFunction) {
         try {
             const user = await this.userRepository.post(req.body);
-            res.status(201).json({ user });
+            res.status(201);
+            res.json({ user });
+            console.log(user.password);
         } catch (error) {
             next(this.#controlHTTPError(error as Error));
         }
@@ -44,7 +46,16 @@ export class UserController {
 
     async addFav(req: Request, res: Response, next: NextFunction) {
         try {
-            //
+            const user = await this.userRepository.get(req.params.id);
+            user.favorites.forEach((item) => {
+                if (item._id.toString() === req.body.id.toString()) {
+                    throw new Error('Duplicated id');
+                }
+                user.favorites.push(req.body.id);
+                const result = this.userRepository.patch(req.params.id, user);
+                res.status(200);
+                res.json(result);
+            });
         } catch (error) {
             next(this.#controlHTTPError(error as Error));
         }
