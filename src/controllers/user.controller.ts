@@ -26,10 +26,12 @@ export class UserController {
             const user = await this.userRepository.find({
                 email: req.body.email,
             });
+
             const PasswordValid = await passwordValidate(
                 req.body.password,
                 user.password
             );
+
             if (!PasswordValid) throw new Error();
             const token = createToken({
                 id: user.id.toString(),
@@ -46,18 +48,19 @@ export class UserController {
 
     async addFav(req: RequestPayload, res: Response, next: NextFunction) {
         try {
-            const album = await this.albumRepository.get(req.params.id);
-
             if (!req.payload) throw new Error('Invalid payload');
+            const album = await this.albumRepository.get(req.params.id);
             const user = await this.userRepository.get(req.payload.id);
 
             if (user.favorites.includes(album.id))
                 throw new Error('este album ya esta en tus favoritos');
             user.favorites.push(album.id);
+
             const updateUser = await this.userRepository.patch(
                 user.id.toString(),
                 { favorites: user.favorites }
             );
+
             res.status(200);
             res.json(updateUser);
         } catch (error) {
@@ -70,7 +73,7 @@ export class UserController {
             if (!req.payload) throw new Error('not found payload');
 
             const user = await this.userRepository.get(req.payload.id);
-
+            console.log(user, 'Soy un User?');
             const album = await this.albumRepository.get(req.params.id);
 
             const deleteAlbum = user.favorites.filter(
@@ -81,7 +84,7 @@ export class UserController {
                 user.id.toString(),
                 { favorites: deleteAlbum }
             );
-
+            console.log(res);
             res.status(200);
             res.json(updateUser);
         } catch (error) {
