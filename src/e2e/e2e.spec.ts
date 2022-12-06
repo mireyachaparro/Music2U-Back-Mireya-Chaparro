@@ -102,7 +102,7 @@ describe('given "app" with "/albums" route', () => {
                 expect(response.status).toBe(403);
             });
 
-            test.skip('then if user is authorize, it sends status 201', async () => {
+            test('then if user is authorize, it sends status 201', async () => {
                 const response = await request(app)
                     .post('/albums/')
                     .set('Authorization', `Bearer ${token}`)
@@ -127,7 +127,7 @@ describe('given "app" with "/albums" route', () => {
             });
 
             //aqui hay que poner un id de un album que exista, para eso hay que hacer lo mismo que para los usuarios, pero no se como se hace para reotnrar los dos clases de ids sin que de error
-            test.skip('then if user is authorize, it sends status 200', async () => {
+            test('then if user is authorize, it sends status 200', async () => {
                 const response = await request(app)
                     .delete('/albums/6388e24d238fcf65c01d2a2c')
                     .set('Authorization', `Bearer ${token}`);
