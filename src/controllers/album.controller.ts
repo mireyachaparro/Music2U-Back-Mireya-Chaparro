@@ -21,6 +21,7 @@ export class AlbumController {
     async get(req: Request, res: Response, next: NextFunction) {
         try {
             const album = await this.albumRepository.get(req.params.id);
+            res.status(200);
             res.json({ album });
         } catch (error) {
             next(this.#controlHTTPError(error as Error));

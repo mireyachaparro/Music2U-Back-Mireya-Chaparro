@@ -1,8 +1,6 @@
 import { logged, RequestPayload } from './interceptors';
 import { Request, Response, NextFunction } from 'express';
 import { HTTPError } from '../interfaces/error';
-//para albums
-// import { AlbumRepository } from '../repositories/album.repository';
 
 describe('given logged middleware', () => {
     describe('when user is no authorize', () => {
@@ -14,7 +12,11 @@ describe('given logged middleware', () => {
         test('then it returns an error', () => {
             logged(req as Request, res as Response, next);
             expect(next).toHaveBeenCalledWith(
-                new HTTPError(403, 'Forbidden', 'User or password incorrect')
+                new HTTPError(
+                    403,
+                    'Forbidden',
+                    'Usuario o contraseña incorrecto'
+                )
             );
         });
     });
