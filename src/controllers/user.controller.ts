@@ -73,7 +73,7 @@ export class UserController {
             if (!req.payload) throw new Error('not found payload');
 
             const user = await this.userRepository.get(req.payload.id);
-            console.log(user, 'Soy un User?');
+
             const album = await this.albumRepository.get(req.params.id);
 
             const deleteAlbum = user.favorites.filter(
@@ -84,7 +84,7 @@ export class UserController {
                 user.id.toString(),
                 { favorites: deleteAlbum }
             );
-            console.log(res);
+
             res.status(200);
             res.json(updateUser);
         } catch (error) {

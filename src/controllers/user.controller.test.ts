@@ -148,7 +148,7 @@ describe('given user controller', () => {
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalled();
         });
-        test('then if we ewant to add an album yet existent, it throws an error', async () => {
+        test('then if we want to add an album yet existent, it throws an error', async () => {
             albumRepo.get = jest.fn().mockResolvedValueOnce({ id: '2421' });
             userRepo.get = jest.fn().mockResolvedValueOnce({
                 favorites: ['2421'],

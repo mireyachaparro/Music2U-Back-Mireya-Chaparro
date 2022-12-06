@@ -15,8 +15,7 @@ export const logged = (
 
     try {
         if (!authveri || !authveri?.startsWith('Bearer')) {
-            next(new HTTPError(403, 'Forbidden', 'User or password incorrect'));
-            return;
+            throw new HTTPError(403, 'Forbidden', 'User or password incorrect');
         }
         const token = authveri.slice(7);
         req.payload = readToken(token);
