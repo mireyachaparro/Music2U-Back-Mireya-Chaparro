@@ -31,12 +31,16 @@ describe('Given an instance of UserRepository', () => {
     const albumRepository = AlbumRepository.getInstance();
 
     const malformed = '1';
-    const invalid = '537b422da27b69c98b1916e1';
+    const invalid = '123456789012345678901234';
     let testIds: Array<string>;
     // let album = mongoose.model('Album', AlbumSchema);
 
-    beforeAll(async () => {
+    beforeEach(async () => {
         testIds = await setUpCollection();
+    });
+
+    afterEach(() => {
+        mongoose.disconnect();
     });
 
     //no hace falta
@@ -65,7 +69,7 @@ describe('Given an instance of UserRepository', () => {
             expect(spyModel).toHaveBeenCalled();
         });
 
-        test.skip('then if ID is invalid, it throws an error', async () => {
+        test('then if ID is invalid, it throws an error', async () => {
             expect(async () => {
                 await repository.get(invalid);
             }).rejects.toThrow();
@@ -78,15 +82,24 @@ describe('Given an instance of UserRepository', () => {
         test('then if data is valid, it returns the new user', async () => {
             const newUser = {
                 name: 'mireya',
-                password:
-                    '$2a$10$GLJAg0Vs9rlGQPDezEZ7juj9dv1Y0lnY.p4lxEiz2WwXCvOzlf/.G',
+                password: '1',
                 email: 'pruebaa@gmial.com',
                 last_name: 'chaparro',
             };
             const result = await repository.post(newUser);
-
             expect(spyModel).toHaveBeenCalled();
             expect(result.name).toBe(newUser.name);
+        });
+        test('then if data is not valid, it returns the new user', async () => {
+            const newUser = {
+                name: 'mireya',
+                email: 'pruebaa@gmial.com',
+                last_name: 'chaparro',
+            };
+            expect(async () => {
+                await repository.post(newUser);
+            }).rejects.toThrow();
+            expect(spyModel).toHaveBeenCalled();
         });
     });
 
@@ -98,7 +111,7 @@ describe('Given an instance of UserRepository', () => {
             expect(result.name).toEqual(mock[0].name);
         });
 
-        test.skip('then if data is invalid, it throws an error', async () => {
+        test('then if data is invalid, it throws an error', async () => {
             //con esto devuelve null que es lo que estoy controlando
             // const result = await repository.find({
             //     email: 'inexistent@gmail.com',
@@ -171,8 +184,4 @@ describe('Given an instance of UserRepository', () => {
     //         expect(spyModel).toHaveBeenCalled();
     //     });
     // });
-
-    afterAll(() => {
-        mongoose.disconnect();
-    });
 });

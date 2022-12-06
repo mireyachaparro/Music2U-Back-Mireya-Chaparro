@@ -108,7 +108,7 @@ describe('Given an instance of AlbumRepository', () => {
         });
 
         test('if data is invalid, it throws an error', async () => {
-            const newAlbum = { name: 'Add album' };
+            const newAlbum = { name: 'Add album', password: 1 };
             expect(async () => {
                 await repository.post(newAlbum);
             }).rejects.toThrowError(mongoose.MongooseError);
@@ -137,10 +137,9 @@ describe('Given an instance of AlbumRepository', () => {
 
     describe('when it calls delete and it calls Model.delete', () => {
         const spyModel = jest.spyOn(AlbumModel, 'findByIdAndDelete');
-        test.skip('then if id is valid, it returns an empty object', async () => {
-            const result = await repository.delete(testIds[0]);
+        test('then if id is valid, it returns an empty object', async () => {
+            await repository.delete(testIds[0]);
             expect(spyModel).toHaveBeenCalled();
-            expect(result).toBe({});
         });
 
         test('then if id is invalid, it throws an error', async () => {

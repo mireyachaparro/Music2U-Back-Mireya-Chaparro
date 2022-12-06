@@ -63,7 +63,7 @@ describe('given album controller', () => {
                 res as Response,
                 next
             );
-            console.log(res.json);
+
             expect(res.json).toHaveBeenCalled();
         });
 
