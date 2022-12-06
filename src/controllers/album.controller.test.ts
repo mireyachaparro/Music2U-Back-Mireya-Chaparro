@@ -1,17 +1,15 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import { RequestPayload } from '../middlewares/interceptors';
 import { AlbumRepository } from '../repositories/album.repository';
 import { UserRepository } from '../repositories/user.repository';
-import { UserController } from './user.controller';
 import { AlbumController } from './album.controller';
 import { HTTPError } from '../interfaces/error';
 
 describe('given album controller', () => {
     const mockPass =
         '$2a$10$KF1T.wQ5sTYLHrnKwGpgv.MVwcTDyh0u5a3Rhvc2/W2AhGKLxG.lm';
-    const mockToken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOGUwODExYzY4YWExNWIzNDkxODllOCIsIm5hbWUiOiJhbHZhcmljZXBzIiwibGFzdF9uYW1lIjoiYWx2YXJpY2VwcyIsImVtYWlsIjoiYWx2YXJpY2VwcyIsImlhdCI6MTY3MDI1MjY0OH0.NHDCgSbxMtKXfBJ7Nvo36kZ3p1maXUmZOM-pod_Kjrg';
+
     const mockAlbum = [
         {
             name: 'prueba',
