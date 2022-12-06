@@ -32,8 +32,8 @@ describe('Given an instance of UserRepository', () => {
 
     const malformed = '1';
     const invalid = '123456789012345678901234';
+    const mockPass = '1';
     let testIds: Array<string>;
-    // let album = mongoose.model('Album', AlbumSchema);
 
     beforeEach(async () => {
         testIds = await setUpCollection();
@@ -42,16 +42,6 @@ describe('Given an instance of UserRepository', () => {
     afterEach(() => {
         mongoose.disconnect();
     });
-
-    //no hace falta
-    // describe('when it calls getAll and it calls Model.find', () => {
-    //     test('then it returns all users in the collection', async () => {
-    //         const spyMmodel = jest.spyOn(UserModel, 'find');
-    //         const result = await repository.getAll();
-    //         expect(spyMmodel).toHaveBeenCalled();
-    //         expect(result[0].name).toEqual(mock[0].name);
-    //     });
-    // });
 
     describe('when it calls get and it calls Model.findById', () => {
         const spyModel = jest.spyOn(UserModel, 'findById');
@@ -82,7 +72,7 @@ describe('Given an instance of UserRepository', () => {
         test('then if data is valid, it returns the new user', async () => {
             const newUser = {
                 name: 'mireya',
-                password: '1',
+                password: mockPass,
                 email: 'pruebaa@gmial.com',
                 last_name: 'chaparro',
             };
@@ -109,22 +99,6 @@ describe('Given an instance of UserRepository', () => {
             const result = await repository.find(mock[0]);
             expect(spyModel).toHaveBeenCalled();
             expect(result.name).toEqual(mock[0].name);
-        });
-
-        test('then if data is invalid, it throws an error', async () => {
-            //con esto devuelve null que es lo que estoy controlando
-            // const result = await repository.find({
-            //     email: 'inexistent@gmail.com',
-            // });
-            // expect(result).toBe(null);
-            // expect(spyModel).toHaveBeenCalled();
-            //con esto espera undefined
-            // expect(async () => {
-            //     await repository.find({
-            //         email: 'email@gmail.com',
-            //     });
-            // }).rejects.toThrowError(mongoose.MongooseError);
-            // expect(spyModel).toHaveBeenCalled();
         });
     });
 
@@ -157,31 +131,4 @@ describe('Given an instance of UserRepository', () => {
             expect(spyModel).toHaveBeenCalled();
         });
     });
-
-    //no hace falta
-    // describe('when it calls delete and it calls findByIdAndDelete', () => {
-    //     const spyModel = jest.spyOn(UserModel, 'findByIdAndDelete');
-    //da undefined
-    // test('then if id is valid, it returns an empty object', async () => {
-    //     const result = await repository.delete(testIds[0]);
-    //     expect(spyModel).toHaveBeenCalled();
-    //     expect(result).toEqual({});
-    // });
-
-    //no hace falta
-    //     test('then if id is invalid, it throws an error', async () => {
-    //         expect(async () => {
-    //             await repository.delete(invalid);
-    //         }).rejects.toThrowError(mongoose.MongooseError);
-    //         expect(spyModel).toHaveBeenCalled();
-    //     });
-
-    //no hace falta
-    //     test('then if id is malformed, it throws a casting error', async () => {
-    //         expect(async () => {
-    //             await repository.delete(invalid);
-    //         }).rejects.toThrowError(mongoose.MongooseError);
-    //         expect(spyModel).toHaveBeenCalled();
-    //     });
-    // });
 });
