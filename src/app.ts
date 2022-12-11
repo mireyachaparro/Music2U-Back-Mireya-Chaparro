@@ -11,14 +11,14 @@ export const app = express();
 app.disable('x-powered-by');
 
 const corsOptions = {
-    origin: 'trustedwebsite.com',
+    origin: '*',
 };
 
 app.use(morgan('dev'));
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
-app.use(setCors);
+// app.use(setCors);
 
 app.get('/', (_req, res) => {
     res.send('API ALBUMS').end();
