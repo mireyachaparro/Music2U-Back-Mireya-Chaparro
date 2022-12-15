@@ -40,7 +40,7 @@ export class UserController {
                 email: user.email,
             });
             res.status(201);
-            res.json({ token });
+            res.json({ user: user, token: token });
         } catch (error) {
             next(this.#controlHTTPError(error as Error));
         }

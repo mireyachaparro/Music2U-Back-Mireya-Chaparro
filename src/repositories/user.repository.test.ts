@@ -28,7 +28,7 @@ describe('Given an instance of UserRepository', () => {
     };
 
     const repository = UserRepository.getInstance();
-    const albumRepository = AlbumRepository.getInstance();
+    AlbumRepository.getInstance();
 
     const malformed = '1';
     const invalid = '123456789012345678901234';

@@ -14,9 +14,7 @@ export class UserRepository implements UserRepoGeneric {
     #Model = UserModel;
 
     async get(id: id): Promise<User> {
-        const result = this.#Model.findById(id).populate('possessions', {
-            owner: 0,
-        });
+        const result = this.#Model.findById(id).populate('possessions');
         return result as unknown as Promise<User>;
     }
 
@@ -29,8 +27,10 @@ export class UserRepository implements UserRepoGeneric {
     }
 
     async find(search: Partial<User>): Promise<User> {
-        const result = this.#Model.findOne(search);
-
+        const result = this.#Model
+            .findOne(search)
+            .populate('favorites')
+            .populate('possessions');
         return result as unknown as Promise<User>;
     }
 
@@ -39,9 +39,7 @@ export class UserRepository implements UserRepoGeneric {
             .findByIdAndUpdate(id, data, {
                 new: true,
             })
-            .populate('possessions', {
-                owner: 0,
-            });
+            .populate('favorites');
 
         return result as unknown as Promise<User>;
     }

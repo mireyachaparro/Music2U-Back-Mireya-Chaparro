@@ -26,7 +26,7 @@ describe('Given an instance of AlbumRepository', () => {
     ];
     const setUpCollection = async () => {
         await dbConnect();
-        await AlbumModel.deleteMany();
+        AlbumModel.deleteMany();
         await AlbumModel.insertMany(mock);
         const data = await AlbumModel.find();
         return [data[0].id, data[1].id];

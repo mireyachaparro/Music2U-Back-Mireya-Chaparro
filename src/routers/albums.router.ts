@@ -10,7 +10,7 @@ const controller = new AlbumController(
     UserRepository.getInstance()
 );
 albumsRouter.get('/', controller.getAll.bind(controller));
-albumsRouter.get('/:id', logged, controller.get.bind(controller));
+albumsRouter.get('/:id', controller.get.bind(controller));
 albumsRouter.post('/', logged, controller.post.bind(controller));
 albumsRouter.patch('/:id', logged, controller.patch.bind(controller));
 albumsRouter.delete('/:id', logged, controller.delete.bind(controller));

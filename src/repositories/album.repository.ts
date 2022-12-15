@@ -14,38 +14,24 @@ export class AlbumRepository implements AlbumRepoGeneric {
     #Model = AlbumModel;
 
     async getAll(): Promise<Array<Album>> {
-        const result = this.#Model.find().populate('owner', {
-            possessions: 0,
-            favorites: 0,
-        });
+        const result = this.#Model.find().populate('owner');
         return result;
     }
 
     async get(id: id): Promise<Album> {
-        const result = await this.#Model.findById(id).populate('owner', {
-            possessions: 0,
-            favorites: 0,
-        });
+        const result = await this.#Model.findById(id).populate('owner');
         if (!result) throw new Error('ID not found');
         return result;
     }
 
     async find(search: Partial<Album>): Promise<Album> {
-        const result = await this.#Model.findOne(search).populate('owner', {
-            possessions: 0,
-            favorites: 0,
-        });
+        const result = await this.#Model.findOne(search).populate('owner');
         if (!result) throw new Error('ID not found');
         return result;
     }
 
     async post(data: ProtoAlbum): Promise<Album> {
-        const result = await (
-            await this.#Model.create(data)
-        ).populate('owner', {
-            possessions: 0,
-            favorites: 0,
-        });
+        const result = await (await this.#Model.create(data)).populate('owner');
         return result;
     }
 
@@ -54,10 +40,7 @@ export class AlbumRepository implements AlbumRepoGeneric {
             .findByIdAndUpdate(id, data, {
                 new: true,
             })
-            .populate('owner', {
-                possessions: 0,
-                favorites: 0,
-            });
+            .populate('owner');
         if (!result) throw new Error('ID not found');
         return result;
     }
