@@ -3,7 +3,7 @@ import { app } from './app.js';
 import { dbConnect } from './db.connect.js';
 import { MyErrors } from './interfaces/error.js';
 
-const port = process.env.PORT || 3300;
+const port = process.env.PORT || 7700;
 const server = http.createServer(app);
 
 server.on('listening', () => {

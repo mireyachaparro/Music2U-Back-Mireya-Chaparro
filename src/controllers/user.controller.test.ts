@@ -105,7 +105,7 @@ describe('given user controller', () => {
         test('then if password is invalid, it throws an error', () => {
             userRepo.find = jest.fn().mockReturnValue({
                 ...mockData,
-                id: new String(),
+                id: '',
                 password: mockPass,
             });
             userController.login(req as Request, res as Response, next);

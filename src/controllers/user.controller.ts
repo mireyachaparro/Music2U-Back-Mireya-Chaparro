@@ -4,7 +4,6 @@ import { UserRepository } from '../repositories/user.repository.js';
 import { AlbumRepository } from '../repositories/album.repository.js';
 import { createToken, passwordValidate } from '../services/auth.js';
 import { RequestPayload } from '../middlewares/interceptors.js';
-import { UserModel } from '../entities/user.entity.js';
 
 export class UserController {
     constructor(
@@ -15,7 +14,6 @@ export class UserController {
     async register(req: Request, res: Response, next: NextFunction) {
         try {
             const user = await this.userRepository.post(req.body);
-            console.log(user);
             res.status(201);
             res.json({ user });
         } catch (error) {
