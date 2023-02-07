@@ -1,5 +1,5 @@
 {
-    "name": "mireya-chaparro-final-project-back",
+    "name": "Music2U-Back-Mireya-Chaparro",
     "version": "1.0.0",
     "description": "API server with express & user validation",
     "main": "index.js",
